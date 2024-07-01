@@ -14,14 +14,15 @@ RUN set -ex && \
     rm -f /usr/bin/x86_64-alpine-linux-musl-gcj
 
 RUN ln -sf python3 /usr/bin/python
-
 ADD . /usr/bin/
 ADD start.sh /usr/bin/
 
 RUN npm --prefix /usr/bin/ install
 EXPOSE 8080
 
-# add a dummy user that will run the server, hence sandboxing the rest of the container
-RUN addgroup -S -g 2000 runner && adduser -S -D -u 2000 -s /sbin/nologin -h /tmp -G runner runner
-#   USER runner
+# Comment out the non-root user setup
+# RUN addgroup -S -g 2000 runner && adduser -S -D -u 2000 -s /sbin/nologin -h /tmp -G runner runner
+# USER runner
+
 CMD sh /usr/bin/start.sh
+
